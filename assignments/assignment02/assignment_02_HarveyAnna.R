@@ -1,6 +1,6 @@
 # Assignment: ASSIGNMENT 2
-# Name: Lastname, Firstname
-# Date: 2010-02-14
+# Name: Harvey, Anna
+# Date: 2020-06-07
 
 ## Check your current working directory using `getwd()`
 getwd()
