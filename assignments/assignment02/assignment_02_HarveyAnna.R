@@ -30,7 +30,6 @@ scores_df <- read.csv("data/scores.csv")
 summary(scores_df)
 
 ## Load the `readxl` library
-install.packages("readxl")
 library('readxl')
 
 ## Using the excel_sheets() function from the `readxl` package,
@@ -60,14 +59,12 @@ voter_turnout_df2 <- read_excel("data/G04ResultsDetail2004-11-02.xls", sheet = 2
 str(voter_turnout_df2)
 
 ## Load the `DBI` library
-install.packages("DBI")
 library(DBI)
 
 ## Create a database connection to `data/tidynomicon/example.db` using the dbConnect() function
 ## The first argument is the database driver which in this case is `RSQLite::SQLite()`
 ## The second argument is the path to the database file
 ## Assign the connection to `db` variable
-install.packages("RSQLite")
 db <- dbConnect(RSQLite::SQLite(), dbname = "data/tidynomicon/example.db")
 
 ## Query the Person table using the `dbGetQuery` function and the
@@ -91,15 +88,10 @@ tables
 dbDisconnect(db)
 
 ## Import the `jsonlite` library
-install.packages("jsonlite")
 library(jsonlite)
 
 ## Convert the scores_df dataframe to JSON using the `toJSON()` function
-toJSON("scores_df")
-scores_df
+toJSON(scores_df)
 
 ## Convert the scores dataframe to JSON using the `toJSON()` function with the `pretty=TRUE` option
-toJSON("scores_df", pretty = TRUE)
-scores_df
-
-## These last two look the same. Is that due to an R update?
+toJSON(scores_df, pretty = TRUE)
