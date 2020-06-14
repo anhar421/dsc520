@@ -31,8 +31,8 @@ plot(Score~Count, data = sports_sec, col = "red", main = "Sports Section Scores"
      xlab = "Number of Students")
 
 #  Once you have produced your Plots answer the following questions:
-# a. Comparing and contrasting the point distributions between the two section, 
-#    looking at both tendency and consistency: Can you say that one section 
+# a. Comparing and contrasting the point distributions between the two section,
+#    looking at both tendency and consistency: Can you say that one section
 #    tended to score more points than the other? Justify and explain your answer.
 # Answer: The sports section had slightly more variety in scores than the regular
 #         section (sports had 19 different scores and regular had 17 different
@@ -46,20 +46,20 @@ plot(Score~Count, data = sports_sec, col = "red", main = "Sports Section Scores"
 #         there seemed to be duplicate rows in the data for the regular section
 #         which could cause errors in analysis.)
 
-# b. Did every student in one section score more points than every student in the 
+# b. Did every student in one section score more points than every student in the
 #    other section? If not, explain what a statistical tendency means in this context.
 # Answer: Neither section had every student score more points then every student
-#         in the other section. In this context, the statistical tendency would most 
-#         likely be the mode (the most frequent score in each section). For the 
+#         in the other section. In this context, the statistical tendency would most
+#         likely be the mode (the most frequent score in each section). For the
 #         sports section, the mode was 285 and 335 (both had 30 students with
 #         those scores). The regular section mode was 350 (30 students).
 
-# c. What could be one additional variable that was not mentioned in the narrative 
+# c. What could be one additional variable that was not mentioned in the narrative
 #    that could be influencing the point distributions between the two sections?
 # Answer: Another variable that could be influencing the point distribution may be
 #         a demographic difference between the two sections. It is stated that the
-#         sports-themed section was advertised as such to the students prior to 
-#         registration. It is possible that the students who were more likely to 
+#         sports-themed section was advertised as such to the students prior to
+#         registration. It is possible that the students who were more likely to
 #         pick a sports-themed class would score differently on average than their
 #         their counterparts, particularly when only given sports examples. It is
 #         also possible that the students who specifically chose NOT to register
