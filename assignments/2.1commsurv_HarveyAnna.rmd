@@ -1,0 +1,80 @@
+---
+title: "Assignment 2.1 - 2014 American Community Survey"
+author: "Anna Harvey"
+date: "6/13/2020"
+output: pdf_document
+---
+
+```{r, include=FALSE}
+options(tinytex.verbose = TRUE)
+```
+```{r}
+getwd()
+setwd("/users/Anna/Documents/GitHub/dsc520/Assignments")
+library(ggplot2)
+commsurv <- read.csv("acs-14-1yr-s0201.csv")
+```
+## 1. What are the elements in your data (including the categories and data types)?
+The elements in my data are two different ID numbers, geography (county and state), population group ID, POPGROUP.display.label, racesreported, HSDegree, and BachDegree. I tried to find a codebook to identify what the column names mean in more detail. The only codebook I could find on the ACS website for this dataset that was relevant was one that provided a table for the race codes.
+
+## 2. Please provide the output from the following functions:  str(); nrow(); ncol()
+```{r}
+str(commsurv)
+```
+```{r}
+nrow(commsurv)
+```
+```{r}
+ncol(commsurv)
+```
+
+## 3.  Create a Histogram of the HSDegree variable using the ggplot2 package.
+## ....a. Set a bin size for the Histogram  
+## ....b. Include a Title and appropriate X/Y axis labels on your Histogram Plot.
+```{r}
+ggplot(commsurv, aes(HSDegree)) + geom_histogram(bins = 8) + ggtitle("High School Degree Completion %") + ylab("Number of Counties") + xlab("Percentage of county population")
+```
+
+## 4. Answer the following questions based on the Histogram produced:
+## ....a. Based on what you see in this histogram, is the data distribution unimodal?
+The data does seem to be unimodal.
+## ....b. Is it approximately symmetrical?
+It is not entirely symmetrical as it has a long tail to the left side of the x-values.
+## ....c. Is it approximately bell-shaped?
+It is approximately bell-shaped.
+## ....d. Is it approximately normal?
+It does not seem to be approximately normal due to the wide number of values on the left side of the mode and fewer values on the right side of the mode.
+## ....e. If not normal, is the distribution skewed? If so, in which direction?
+The data is skewed to the left.
+## ....f. Include a normal curve to the Histogram that you plotted.
+```{r}
+ggplot(commsurv, aes(HSDegree)) + geom_histogram(aes(y = ..density..), bins = 8) + ggtitle("High School Degree Completion %") + ylab("Density") + xlab("Percentage of county population") + stat_function(fun = dnorm, args = list(mean = mean(commsurv$HSDegree, na.rm = TRUE), sd = sd(commsurv$HSDegree, na.rm = TRUE)), col = "red", size = 2)
+```
+## ....g. Explain whether a normal distribution can accurately be used as a model for this data.
+A normal distribution cannot accurately be used as a model for this data. The data skews to the left due to a high quantity of widely varied lower completion percentages from the mean.
+
+## 5. Create a Probability Plot of the HSDegree variable.
+```{r}
+qplot(sample = HSDegree, data = commsurv) + ggtitle("High School Degree Completion %") + ylab("Number of Counties") + xlab("Percentage of county population")
+```
+
+## 6. Answer the following questions based on the Probability Plot:
+## ....a. Based on what you see in this probability plot, is the distribution approximately normal? Explain how you know.
+The distribution is not approximately normal. 
+## ....b. If not normal, is the distribution skewed? If so, in which direction? Explain how you know.
+The data is skewed to the left. If you insert a reference line that connects the smallest and largest data points, all the other data would lie above the line.
+
+## 7. Now that you have looked at this data visually for normality, you will now quantify normality with numbers using the stat.desc() function. Include a screen capture of the results produced.
+```{r}
+library(pastecs)
+statsum <- stat.desc(commsurv$HSDegree, basic = FALSE, norm = TRUE)
+"Z-scores"
+"Skew z-score:" 
+-4.03*2
+
+"Kurtosis z-score"
+5.27*2
+```
+
+## 8. In several sentences provide an explanation of the result produced for skew, kurtosis, and z-scores. In addition, explain how a change in the sample size may change your explanation?
+The skew is -1.67. It is lower than -1 which is an indication of substantial skew. The kurtosis is 4.35. That suggests that the data has a distribution that is too peaked to be normal. The z-score for skew is -8.06 and the z-score for kurtosis is 10.54. Both of those values are far outside of what would be expected for a normal distribution. If the sample size increased, it could adjust the skew and kurtosis more towards a normal distribution. The central limit theorem states that if a sample size is sufficiently large, the distribution will be normal even if the source population is skewed.
