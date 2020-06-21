@@ -1,0 +1,58 @@
+---
+title: "ASSIGNMENT 4"
+author: "Anna Harvey"
+date: '2020-06-18'
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+bibliography: bibliography.bib
+---
+
+# Markdown Basics
+
+## Favorite Foods
+
+1. Cheese
+2. Chocolate
+3. Pho
+
+## Image
+
+![All Cases (Log Plot)](C:/Users/Anna/Documents/GitHub/dsc520/completed/assignment04/plots/10-all-cases-log.png)
+
+## Add a Quote
+
+"All of humankind has one thing in common: the sandwich. I believe that all anyone really wants in this life is to sit in peace and eat a sandwich."
+- *Liz Lemon*
+
+## Add an Equation
+
+\[\bar{x} = \displaystyle\sum_{i} p_{i}x_i \]
+
+## Add a Footnote
+
+This is a footnote [^1]
+[^1]: *30 Rock* is the most underrated show of all time.
+
+## Add Citations
+
+* R for Everyone [@lander2014r]
+* Discovering Statistics Using R [@field2012discovering]
+
+# Inline Code
+```{r}
+library(ggplot2)
+
+
+## NY Times COVID-19 Data
+
+## R4DS Height vs Earnings
+
+# Tables
+
+## Knitr Table with Kable
+
+## Pandoc Table
+
+# References
