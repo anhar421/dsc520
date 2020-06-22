@@ -66,7 +66,8 @@ ggplot(data=florida_df, aes(x=date, group=1)) +
 ``` {r, echo = FALSE}
 setwd("/users/Anna/Documents/GitHub/dsc520")
 heights_df <- read.csv("data/r4ds/heights.csv", header = TRUE)
-ggplot(heights_df, aes(x = height, y = earn, col = sex)) + geom_point()
+ggplot(heights_df, aes(x = height, y = earn, col = sex)) + geom_point() + 
+    ggtitle("Height vs Earnings") + xlab("Height (Inches)") + ylab("Earnings (Dollars)")
 ```
 
 # Tables
@@ -80,13 +81,17 @@ age <- c(88, 129, 51, 7000, 36, 2019, 2931, 7052, 589)
 characters_df <- data.frame(name, race, in_fellowship, ring_bearer, age)
 ```
 ## Knitr Table with Kable
-```{r}
+```{r, echo=FALSE}
 knitr::kable(characters_df, caption = "One Ring to Rule Them All")
 ```
 ## Pandoc Table
 ```{r, echo = FALSE}
 library(pander)
-pandoc.table(characters_df, col.names = c("Name", "Race", "In Fellowship?", "Is Ring Bearer?", "Age"), style ="grid")
+characters_5 <- characters_df[c(1:3, 5, 8), ]
+characters_5[characters_5=="TRUE"] <- "Yes"
+characters_5[characters_5=="FALSE"] <- "No"
+row.names(characters_5) <- NULL
+pandoc.table(characters_5, col.names = c("Name", "Race", "In Fellowship?", "Is Ring Bearer?", "Age"), style ="grid")
 ```
 
 # References
