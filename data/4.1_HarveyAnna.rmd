@@ -53,8 +53,10 @@ The coefficient of determination is the percentage that the amount of variabilit
 There seems to be a strong negative relationship between TimeTv and TimeReading. However, there are several outside variables that could have influenced this perceived relationship, including Gender and Happiness. It is also problematic that TimeTv and TimeReading were measured differently. There could be a reason why that happened that influenced the outcome.
 
 ## g. Pick three variables and perform a partial correlation, documenting which variable you are “controlling”. Explain how this changes your interpretation and explanation of the results.
-```{r}
+```{r, include=FALSE}
 library(ggm)
+```
+```{r}
 pcor(c("TimeReading", "TimeTV", "Gender"), var(survey)) #Gender is the control variable
 ```
-Using Gender as the control variable, it actually increases the strong negative relationship between TimeReading and TimeTv. This provides more evidence that the relationship between the two actually exists apart from the other variables. This would suggest that more time spent watching TV would decrease the time spent reading, and vice versa.
+Using Gender as the control variable, it increases the strong negative relationship between TimeReading and TimeTv, but only marginally. This could provide more evidence that the relationship between the two actually exists apart from the other variables, however, the increase in relationship is very small. If this negative relationship actually exists, this would suggest that more time spent watching TV would decrease the time spent reading, and vice versa.
