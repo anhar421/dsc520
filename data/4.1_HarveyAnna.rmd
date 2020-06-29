@@ -1,0 +1,42 @@
+---
+title: "Assignment 4.1: Student Survey"
+author: "Anna Harvey"
+date: "6/28/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r, include=FALSE}
+setwd("/users/Anna/Documents/GitHub/dsc520")
+survey <- read.csv("data/student-survey.csv")
+```
+## a. Use R to calculate the covariance of the Survey variables and provide an explanation of why you would use this calculation and what the results indicate:
+
+```{r, echo=FALSE}
+cov(survey)
+```
+You would use the covariance calculation to help determine if there is a significant relationship between two variables. If the variables have a relationship, they should vary from the mean in the same direction (if positive) or directly opposite each other (if negative). TimeTv and Happiness, Gender and Happiness, and Gender and TimeTv all have positive covariance with each other. TimeReading and TimeTv, TimeReading and Happiness, and TimeReading and Gender all have negative covariance with each other.
+
+## b. Examine the Survey data variables. What measurement is being used for the variables? Explain what effect changing the measurement being used for the variables would have on the covariance calculation. Would this be a problem? Explain and provide a better alternative if needed.
+
+Since there is no information available about the measurements of the variable, we have to make some assumptions. It is clear that TimeTv and TimeReading are being measured differently. Most likely, TimeReading is being measured in hours while TimeTv is being measured in minutes. There's no indication of how Happiness or Gender are being measured. Covariance changes depending on the measurement of the variable and won't really work well if the measurements are not the same. If we changed TimeTv to hours, it would cause the covariance to increase in positivity. If we changed TimeReading to minutes, it would cause the covariance to increase in negativity. Since the measurement isn't standardized, this isn't a good measurement for this comparison. A better alternative would be using the correlation coefficient. 
+## c. Choose the type of correlation test to perform, explain why you chose this test, and make a prediction if the test yields a positive or negative correlation?
+I will use a standard Pearson correlation because we want to look at the correlation between two variables (TimeRead and TimeTv) and the variables are both continuous and quantitative. I think the test will yield a negative correlation.
+
+## d. Perform a correlation analysis of:
+### 1. All variables
+```{r, echo=FALSE}
+cor(survey)
+```
+### 2. A single correlation between two a pair of the variables
+Correlation between TimeReading and TimeTv is: 
+```{r, echo=FALSE}
+cor(survey$TimeReading,survey$TimeTV)
+```
+### 3. Repeat your correlation test in step 2 but set the confidence interval at 99%
+```{r, echo=FALSE}
+cor.test(survey$TimeReading, survey$TimeTV, conf.level = 0.99)
+```
+### 4. Describe what the calculations in the correlation matrix suggest about the relationship between the variables. Be specific with your explanation.
