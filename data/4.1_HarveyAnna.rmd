@@ -40,3 +40,21 @@ cor(survey$TimeReading,survey$TimeTV)
 cor.test(survey$TimeReading, survey$TimeTV, conf.level = 0.99)
 ```
 ### 4. Describe what the calculations in the correlation matrix suggest about the relationship between the variables. Be specific with your explanation.
+There is a strong positive relationship between TimeTv and Happiness. There is a strong negative relationship between TimeTv and TimeReading. There is a medium negative relationship between Happiness and TimeReading. There is a small positive relationship between Gender and TimeTv as well as Gender and Happiness. There is a small negative relationship between Gender and TimeReading.
+
+## e. Calculate the correlation coefficient and the coefficient of determination, describe what you conclude about the results.
+```{r, echo=FALSE}
+cor(survey)
+cor(survey)^2
+```
+The coefficient of determination is the percentage that the amount of variability in one variable that is shared by the other. Since the coefficient of determination for TimeTv and TimeReading is approximately 78%, that affirms that there is a strong relationship between the two.
+
+## f. Based on your analysis can you say that watching more TV caused students to read less? Explain.
+There seems to be a strong negative relationship between TimeTv and TimeReading. However, there are several outside variables that could have influenced this perceived relationship, including Gender and Happiness. It is also problematic that TimeTv and TimeReading were measured differently. There could be a reason why that happened that influenced the outcome.
+
+## g. Pick three variables and perform a partial correlation, documenting which variable you are “controlling”. Explain how this changes your interpretation and explanation of the results.
+```{r}
+library(ggm)
+pcor(c("TimeReading", "TimeTV", "Gender"), var(survey)) #Gender is the control variable
+```
+Using Gender as the control variable, it actually increases the strong negative relationship between TimeReading and TimeTv. This provides more evidence that the relationship between the two actually exists apart from the other variables. This would suggest that more time spent watching TV would decrease the time spent reading, and vice versa.
