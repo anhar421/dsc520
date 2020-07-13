@@ -1,0 +1,105 @@
+---
+title: "6.1 Housing Data"
+author: "Anna Harvey"
+date: "7/12/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+library(readxl)
+setwd("/users/Anna/Documents/GitHub/dsc520")
+survey <- read_excel("data/week-6-housing.xlsx")
+library(lm.beta)
+```
+
+##a. Explain why you chose to remove data points from your ‘clean’ dataset.
+n/a
+
+##b. Create two variables; one that will contain the variables Sale Price and Square Foot of Lot (same variables used from previous assignment on simple regression) and one that will contain Sale Price and several additional predictors of your choice. Explain the basis for your additional predictor selections.
+
+```{r}
+sale_sqft <- lm(survey$SalePrice~survey$sq_ft_lot)
+sale_vars <- lm(survey$SalePrice~survey$square_feet_total_living + survey$year_built)
+```
+I chose the square feet of the living space and the year the house was built as additional predictors. I chose these because the amount of living space and how old the house is are likely to determine the sale price of the house.
+
+##c. Execute a summary() function on two variables defined in the previous step to compare the model results. What are the R2 and Adjusted R2 statistics? Explain what these results tell you about the overall model. Did the inclusion of the additional predictors help explain any large variations found in Sale Price?
+```{r}
+summary(sale_sqft)
+summary(sale_vars)
+```
+Sale Price vs Sq_ft_lot
+R2 = 0.01435 
+Adjusted R2 = 0.01428
+
+Sale Price vs Sq Ft Living vs Year Built
+R2 = 0.2184
+Adjusted R2 = 0.2183
+
+R2 and adjusted R2 increases with the addition of more variables. This tells me that the addition of my choice of variables increased the variation of the output value. The R2 and adjusted R2 for each variable are very close to each other. This tells me that the variables are significant and do affect the output variable.
+
+##d. Considering the parameters of the multiple regression model you have created. What are the standardized betas for each parameter and what do the values indicate?
+```{r}
+lm.beta(sale_vars)
+```
+Standardized beta for Sq Ft Living Space = 0.4196286
+Standardized beta for Year Built = 0.1140856
+
+This tells me that the square footage of the living space plays a more important role in determining the sale price than the year the house was built. 
+
+##e. Calculate the confidence intervals for the parameters in your model and explain what the results indicate.
+```{r}
+confint(sale_vars)
+```
+The variation in the confidence intervals for both the Living Space and Year Built are fairly close to each other, indicating they are likely good representations of the general trend. Living Space is very close together which follows the information from the beta values indicating that it is a more important variable than Year Built for determining the sale price.
+
+##f. Assess the improvement of the new model compared to your original model (simple regression model) by testing whether this change is significant by performing an analysis of variance.
+```{r}
+anova(sale_sqft, sale_vars)
+```
+F = 3358.7
+This does seem to indicate that the addition of the variables caused a significant improvement to the model.
+
+##g. Perform casewise diagnostics to identify outliers and/or influential cases, storing each function's output in a dataframe assigned to a unique variable name.
+```{r}
+sale_varsdf <- data.frame(survey$SalePrice, survey$square_feet_total_living, survey$year_built)
+sale_varsdf$residuals <- resid(sale_vars)
+sale_varsdf$rstandard <- rstandard(sale_vars)
+sale_varsdf$cooks <- cooks.distance(sale_vars)
+sale_varsdf$covratio <- covratio(sale_vars)
+sale_varsdf$leverage <- hatvalues(sale_vars)
+```
+
+##h. Calculate the standardized residuals using the appropriate command, specifying those that are +-2, storing the results of large residuals in a variable you create.
+```{r}
+sale_varsdf$large_residuals <- sale_varsdf$rstandard > 2 | sale_varsdf$rstandard < -2
+large_residuals <- sale_varsdf$rstandard > 2 | sale_varsdf$rstandard < -2
+
+```
+
+##i. Use the appropriate function to show the sum of large residuals.
+```{r}
+sum(large_residuals)
+```
+
+##j. Which specific variables have large residuals (only cases that evaluate as TRUE)?
+```{r}
+sale_varsdf[sale_varsdf$large_residuals == TRUE, c("survey.SalePrice", "survey.square_feet_total_living", "survey.year_built")]
+```
+
+##k. Investigate further by calculating the leverage, cooks distance, and covariance rations. Comment on all cases that are problematics.
+```{r}
+sale_varsdf[sale_varsdf$large_residuals == TRUE, c("cooks", "leverage", "covratio")]
+```
+There are no problematic Cook's values since there are none greater than 1. 
+##l. Perform the necessary calculations to assess the assumption of independence and state if the condition is met or not.
+
+##m. Perform the necessary calculations to assess the assumption of no multicollinearity and state if the condition is met or not.
+
+##n. Visually check the assumptions related to the residuals using the plot() and hist() functions. Summarize what each graph is informing you of and if any anomalies are present.
+
+##o. Overall, is this regression model unbiased? If an unbiased regression model, what does this tell us about the sample vs. the entire population model?
