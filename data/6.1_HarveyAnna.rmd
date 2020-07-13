@@ -14,6 +14,9 @@ library(readxl)
 setwd("/users/Anna/Documents/GitHub/dsc520")
 survey <- read_excel("data/week-6-housing.xlsx")
 library(lm.beta)
+library(ggplot2)
+library(QuantPsyc)
+library(car)
 ```
 
 ##a. Explain why you chose to remove data points from your ‘clean’ dataset.
@@ -95,11 +98,27 @@ sale_varsdf[sale_varsdf$large_residuals == TRUE, c("survey.SalePrice", "survey.s
 ```{r}
 sale_varsdf[sale_varsdf$large_residuals == TRUE, c("cooks", "leverage", "covratio")]
 ```
-There are no problematic Cook's values since there are none greater than 1. 
+There are no problematic Cook's values since there are none greater than 1. The leverage values all lie between 0 and 1 so there are no problematic indicators there either. The covariance ratios also seem to be more or less within the approximate boundaries (between 1.0007 and 0.9993), however, there are a few that fall around the 0.98 range.
+
 ##l. Perform the necessary calculations to assess the assumption of independence and state if the condition is met or not.
+```{r}
+durbinWatsonTest(sale_vars)
+```
+The p-value is 0 which suggests the variables do significantly impact the outcome.
 
 ##m. Perform the necessary calculations to assess the assumption of no multicollinearity and state if the condition is met or not.
+```{r}
+vif(sale_vars)
+```
+Both VIF figures are very close to 1 so we can conclude that there is no collinearity in the data.
 
 ##n. Visually check the assumptions related to the residuals using the plot() and hist() functions. Summarize what each graph is informing you of and if any anomalies are present.
+```{r}
+plot(sale_vars)
+hist(sale_vars)
+```
+By looking at the graph, it seems like the data may not be linear. There seems to be some outliers far out from the majority of the data in both directions.The normal Q-Q graph in particular shows a dip to the right in the mid-range of the standardized residuals.
 
 ##o. Overall, is this regression model unbiased? If an unbiased regression model, what does this tell us about the sample vs. the entire population model?
+
+With the calculations done with the data, it seems that the data is largely unbiased. There may be some outliers but they may not be statistically significant enough to claim that the observations would be a poor representation of the entire population.
