@@ -1,0 +1,51 @@
+---
+title: "Assignment 7.1"
+author: "Anna Harvey"
+date: July 19, 2020
+output:
+  
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+library(caTools)
+knitr::opts_chunk$set(echo = TRUE)
+```
+## a. Fit a binary logistic regression model to the data set that predicts whether or not the patient survived for one year (the Risk1Y variable) after the surgery. Use the glm() function to perform the logistic regression. See Generalized Linear Models for an example. Include a summary using the summary() function in your results.
+
+```{r, include=FALSE}
+surgery <- foreign::read.arff("C:/Users/Anna/Documents/GitHub/dsc520/assignments/ThoraricSurgery.arff")
+```
+```{r}
+logregmod <- glm(Risk1Yr ~ PRE30 + PRE17 + PRE14 + PRE9, data = surgery, family = binomial)
+
+summary(logregmod)
+```
+
+## b. According to the summary, which variables had the greatest effect on the survival rate?
+
+The variable PRE14OC14 which indicates the size of the original tumor as being the largest size is the most significant of the included variables. The other significant variables (in order from most to least significant) are: Type 2 Diabetes, Dyspnoea before surgery, Size 13 tumors (2nd largest), and Smoking.
+
+## c. To compute the accuracy of your model, use the dataset to predict the outcome variable. The percent of correct predictions is the accuracy of your model. What is the accuracy of your model?
+
+```{r}
+#Split the data into training and testing sets
+split <- sample.split(surgery, SplitRatio = 0.8)
+train <- subset(surgery, split == TRUE)
+test <- subset(surgery, split == FALSE)
+
+#Create the GLM with the training set
+mod <- glm(Risk1Yr ~ PRE30 + PRE17 + PRE14 + PRE9, data = train, family = binomial)
+
+#Run the data through the model
+res <- predict(mod, test, type = "response")
+res <- predict(mod, train, type = "response")
+
+#Validate model with confusion matrix
+confmatrix <- table(Actual_value = train$Risk1Yr, Predicted_value = res > 0.5)
+confmatrix
+
+#Calculate accuracy
+(confmatrix[[1,1]] + confmatrix[[2,2]]) / sum(confmatrix)
+```
+The accuracy of the model is 83.7%
