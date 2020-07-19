@@ -8,13 +8,14 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+setwd("/users/Anna/Documents/GitHub/dsc520/assignments")
 library(caTools)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 ## a. Fit a binary logistic regression model to the data set that predicts whether or not the patient survived for one year (the Risk1Y variable) after the surgery. Use the glm() function to perform the logistic regression. See Generalized Linear Models for an example. Include a summary using the summary() function in your results.
 
 ```{r, include=FALSE}
-surgery <- foreign::read.arff("C:/Users/Anna/Documents/GitHub/dsc520/assignments/ThoraricSurgery.arff")
+surgery <- foreign::read.arff("ThoraricSurgery.arff")
 ```
 ```{r}
 logregmod <- glm(Risk1Yr ~ PRE30 + PRE17 + PRE14 + PRE9, data = surgery, family = binomial)
@@ -46,6 +47,6 @@ confmatrix <- table(Actual_value = train$Risk1Yr, Predicted_value = res > 0.5)
 confmatrix
 
 #Calculate accuracy
-(confmatrix[[1,1]] + confmatrix[[2,2]]) / sum(confmatrix)
+accresult <- signif((((confmatrix[[1,1]] + confmatrix[[2,2]]) / sum(confmatrix))*100), digits=5)
+print(paste("Accuracy = ", accresult, "%"))
 ```
-The accuracy of the model is 83.7%
