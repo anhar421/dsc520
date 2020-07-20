@@ -17,16 +17,47 @@ binary <- read.csv("binary-classifier-data.csv")
 logregmodel <- glm(label ~ x + y, data = binary)
 ```
 ###a. What is the accuracy of the logistic regression classifier?
+
 ```{r}
+#Split the data into training and testing sets
+split <- sample.split(binary, SplitRatio = 0.8)
+train <- subset(binary, split == TRUE)
+test <- subset(binary, split == FALSE)
+
+#Create the GLM with the training set
+mod <- glm(label ~ x + y, data = binary)
+
+#Run the data through the model
+res <- predict(mod, test, type = "response")
+res <- predict(mod, train, type = "response")
+
 #Validate model with confusion matrix
-confmatrix <- table(Actual_value = binary$label, Predicted_value = res > 0.5)
+confmatrix <- table(Actual_value = train$label, Predicted_value = res > 0.5)
 confmatrix
 
 #Calculate accuracy
-accresult <- signif((((confmatrix[[2,2]] + confmatrix[[2,2]]) / sum(confmatrix))*100), digits=5)
-accresult
+accresult <- signif((((confmatrix[[1,1]] + confmatrix[[2,2]]) / sum(confmatrix))*100), digits=5)
+print(paste("Accuracy = ", accresult, "%"))
 ```
 
 ###b. How does the accuracy of the logistic regression classifier compare to the nearest neighbors algorithm?
+
+```{r}
+ran <- sample(1:nrow(binary), 0.9 * nrow(binary))
+nor <- function(x) {(x-min(x)/(max(x)-min(x)))}
+binary_norm <- as.data.frame(lapply(binary[,c(1,2,3)], nor))
+summary(binary_norm)
+
+binary_train <- binary_norm[ran,]
+binary_test <- binary_norm[-ran,]
+binary_target_category <- binary[ran, 1]
+binary_test_category <- binary[-ran, 1]
+library(class)
+pr <- knn(binary_train, binary_test, cl=binary_target_category, k = 10)
+
+tab <- table(pr, binary_test_category)
+accuracy <- function(x) (sum(diag(x))/(sum(rowSums(x)))*100)
+print(paste("Accuracy = ", accuracy(tab), "%"))
+```
 
 ###c. Why is the accuracy of the logistic regression classifier different from that of the nearest neighbors?
