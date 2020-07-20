@@ -2,7 +2,7 @@
 title: "7.2 Assignment"
 author: "Anna Harvey"
 date: "7/19/2020"
-output: word_document
+output:  word_document
 ---
 
 ```{r setup, include=FALSE}
@@ -15,8 +15,9 @@ knitr::opts_chunk$set(echo = TRUE)
 setwd("/users/Anna/Documents/GitHub/dsc520/assignments")
 binary <- read.csv("binary-classifier-data.csv")
 logregmodel <- glm(label ~ x + y, data = binary)
+library(caTools)
 ```
-###a. What is the accuracy of the logistic regression classifier?
+### a. What is the accuracy of the logistic regression classifier?
 
 ```{r}
 #Split the data into training and testing sets
@@ -40,24 +41,43 @@ accresult <- signif((((confmatrix[[1,1]] + confmatrix[[2,2]]) / sum(confmatrix))
 print(paste("Accuracy = ", accresult, "%"))
 ```
 
-###b. How does the accuracy of the logistic regression classifier compare to the nearest neighbors algorithm?
+### b. How does the accuracy of the logistic regression classifier compare to the nearest neighbors algorithm?
 
 ```{r}
+#Generate random number that is 90% of the total number of rows in dataset
 ran <- sample(1:nrow(binary), 0.9 * nrow(binary))
+
+#Normalization function
 nor <- function(x) {(x-min(x)/(max(x)-min(x)))}
+
+#Run normalization on the 3 columns of dataset because they are the predictors
 binary_norm <- as.data.frame(lapply(binary[,c(1,2,3)], nor))
 summary(binary_norm)
 
+#Extract training set
 binary_train <- binary_norm[ran,]
+
+#Extract testing set
 binary_test <- binary_norm[-ran,]
+
+#Extract 1st column of train dataset because it will be used as 'cl' argument in knn function
 binary_target_category <- binary[ran, 1]
+
+#Extract 1st column of test dataset to measure the accuracy
 binary_test_category <- binary[-ran, 1]
 library(class)
-pr <- knn(binary_train, binary_test, cl=binary_target_category, k = 10)
 
+#Run knn function
+pr <- knn(binary_train, binary_test, cl=binary_target_category, k = 39)
+
+#Create confusion matrix
 tab <- table(pr, binary_test_category)
+
+#Divides correct predictions by total number of predictions to tell us how accurate the model is
 accuracy <- function(x) (sum(diag(x))/(sum(rowSums(x)))*100)
 print(paste("Accuracy = ", accuracy(tab), "%"))
 ```
 
-###c. Why is the accuracy of the logistic regression classifier different from that of the nearest neighbors?
+### c. Why is the accuracy of the logistic regression classifier different from that of the nearest neighbors?
+
+The KNN algorithm calculates accuracy by checking the 39 nearest neighbors of the predicted value (k=39) to determine the category. The logistic regression classifier calculates the overall accuracy of the model.
