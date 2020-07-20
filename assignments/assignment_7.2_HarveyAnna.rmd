@@ -1,0 +1,32 @@
+---
+title: "7.2 Assignment"
+author: "Anna Harvey"
+date: "7/19/2020"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Fit a logistic regression model to the binary-classifier-data.csv dataset from the previous assignment.
+
+```{r, include=FALSE}
+setwd("/users/Anna/Documents/GitHub/dsc520/assignments")
+binary <- read.csv("binary-classifier-data.csv")
+logregmodel <- glm(label ~ x + y, data = binary)
+```
+###a. What is the accuracy of the logistic regression classifier?
+```{r}
+#Validate model with confusion matrix
+confmatrix <- table(Actual_value = binary$label, Predicted_value = res > 0.5)
+confmatrix
+
+#Calculate accuracy
+accresult <- signif((((confmatrix[[2,2]] + confmatrix[[2,2]]) / sum(confmatrix))*100), digits=5)
+accresult
+```
+
+###b. How does the accuracy of the logistic regression classifier compare to the nearest neighbors algorithm?
+
+###c. Why is the accuracy of the logistic regression classifier different from that of the nearest neighbors?
