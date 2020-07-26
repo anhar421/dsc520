@@ -1,0 +1,45 @@
+---
+title: "8.2 Assignment"
+author: "Anna Harvey"
+date: "7/25/2020"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## a. Plot the data from each dataset using a scatter plot.
+```{r, include=FALSE}
+setwd("/users/Anna/Documents/GitHub/dsc520/data")
+library(ggplot2)
+library(class)
+binary <- read.csv("binary-classifier-data.csv")
+trinary <- read.csv("trinary-classifier-data.csv")
+```
+```{r}
+ggplot(binary, aes(x = x, y = y)) + geom_point()
+ggplot(trinary, aes(x = x, y = y)) + geom_point()
+```
+
+## b. Fit a k nearest neighbors model for each dataset for k=3, k=5, k=10, k=15, k=20, and k=25. Compute the accuracy of the resulting models for each value of k. Plot the results in a graph where the x-axis is the different values of k and the y-axis is the accuracy of the model.
+
+```{r}
+knn_accuracy <- function(ds, k) {
+    ran <- sample(1:nrow(ds), 0.9 * nrow(ds))
+    nor <- function(x) {(x-min(x)/(max(x)-min(x)))}
+    norm <- as.data.frame(lapply(ds[,c(1,2,3)], nor))
+    train <- norm[ran,]
+    test <- norm[-ran,]
+    target_category <- ds[ran, 1]
+    test_category <- ds[-ran, 1]
+    pr <- knn(train, test, cl=target_category, k = k)
+    tab <- table(pr, test_category)
+    accuracy <- function(x) (sum(diag(x))/(sum(rowSums(x)))*100)
+print(paste("For ", ds, " where k = ", k, ", ", "Accuracy = ", accuracy(tab), "%"))
+}
+
+knn_accuracy(binary, 5)
+```
+
+## c. Looking back at the plots of the data, do you think a linear classifier would work well on these datasets?
