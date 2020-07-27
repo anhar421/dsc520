@@ -1,0 +1,41 @@
+---
+title: "8.3 Assignment"
+author: "Anna Harvey"
+date: "7/26/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r, include=FALSE}
+setwd("/users/Anna/Documents/GitHub/dsc520/data")
+library(ggplot2)
+library(class)
+library(tidyverse)
+library(cluster)
+library(factoextra)
+unlabeled <- read.csv("clustering-data.csv")
+```
+
+## a. Plot the dataset using a scatter plot.
+
+```{r, echo = FALSE}
+ggplot(unlabeled, aes(x = x , y = y)) + geom_point()
+```
+
+## b. Fit the dataset using the k-means algorithm from k=2 to k=12. Create a scatter plot of the resultant clusters for each value of k.
+
+```{r, echo = FALSE}
+unlabeled <- na.omit(unlabeled)
+unlabeled <- scale(unlabeled)
+k_clusters <- kmeans(unlabeled, 11)
+fviz_cluster(k_clusters, data = unlabeled)
+```
+
+## c. As k-means is an unsupervised algorithm, you cannot compute the accuracy as there are no correct values to compare the output to. Instead, you will use the average distance from the center of each cluster as a measure of how well the model fits the data. To calculate this metric, simply compute the distance of each data point to the center of the cluster it is assigned to and take the average value of all of those distances.
+
+```{r, echo = FALSE}
+distance <- get_dist(unlabeled)
+fviz_dist(distance, gradient = list(low = "#00AFBB", mid = "white", high = "#FC4E07"))
+```
