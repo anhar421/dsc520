@@ -24,7 +24,7 @@ ggplot(trinary, aes(x = x, y = y)) + geom_point()
 
 ## b. Fit a k nearest neighbors model for each dataset for k=3, k=5, k=10, k=15, k=20, and k=25. Compute the accuracy of the resulting models for each value of k. Plot the results in a graph where the x-axis is the different values of k and the y-axis is the accuracy of the model.
 
-```{r}
+```{r, include = FALSE}
 knn_accuracy <- function(ds, k) {
     ran <- sample(1:nrow(ds), 0.9 * nrow(ds))
     nor <- function(x) {(x-min(x)/(max(x)-min(x)))}
@@ -36,10 +36,52 @@ knn_accuracy <- function(ds, k) {
     pr <- knn(train, test, cl=target_category, k = k)
     tab <- table(pr, test_category)
     accuracy <- function(x) (sum(diag(x))/(sum(rowSums(x)))*100)
-print(paste("For ", ds, " where k = ", k, ", ", "Accuracy = ", accuracy(tab), "%"))
+    accuracy(tab)
 }
-
-knn_accuracy(binary, 5)
 ```
+```{r, echo = FALSE}
+"For binary dataset:"
+knn_accuracy(binary, 3)
+knn_accuracy(binary, 5)
+knn_accuracy(binary, 10)
+knn_accuracy(binary, 15)
+knn_accuracy(binary, 20)
+knn_accuracy(binary, 25)
+
+"For trinary dataset:"
+knn_accuracy(trinary, 3)
+knn_accuracy(trinary, 5)
+knn_accuracy(trinary, 10)
+knn_accuracy(trinary, 15)
+knn_accuracy(trinary, 20)
+knn_accuracy(trinary, 25)
+```
+```{r, echo = FALSE}
+#Create dataframes for graphing
+k_vals <- c(3,5,10,15,20,25)
+binary_acc <- c(knn_accuracy(binary, 3),
+knn_accuracy(binary, 5),
+knn_accuracy(binary, 10),
+knn_accuracy(binary, 15),
+knn_accuracy(binary, 20),
+knn_accuracy(binary, 25))
+
+binary_df <- data.frame(k_vals, binary_acc)
+
+trinary_acc <- c(knn_accuracy(trinary, 3),
+knn_accuracy(trinary, 5),
+knn_accuracy(trinary, 10),
+knn_accuracy(trinary, 15),
+knn_accuracy(trinary, 20),
+knn_accuracy(trinary, 25))
+
+trinary_df <- data.frame(k_vals, trinary_acc)
+
+ggplot(binary_df, aes(x = k_vals, y = binary_acc)) + geom_point() + geom_smooth() + 
+    ggtitle("Accuracy vs K-value") + xlab("K-value") + ylab("% Accuracy")
+ggplot(trinary_df, aes(x = k_vals, y = trinary_acc)) + geom_point() + geom_smooth() +
+    ggtitle("Accuracy vs K-value") + xlab("K-value") + ylab("% Accuracy")
+```
+
 
 ## c. Looking back at the plots of the data, do you think a linear classifier would work well on these datasets?
