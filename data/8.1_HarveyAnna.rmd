@@ -17,9 +17,9 @@ library(class)
 binary <- read.csv("binary-classifier-data.csv")
 trinary <- read.csv("trinary-classifier-data.csv")
 ```
-```{r}
-ggplot(binary, aes(x = x, y = y)) + geom_point()
-ggplot(trinary, aes(x = x, y = y)) + geom_point()
+```{r, echo = FALSE}
+ggplot(binary, aes(x = x, y = y)) + geom_point() + ggtitle("Binary")
+ggplot(trinary, aes(x = x, y = y)) + geom_point() + ggtitle("Trinary")
 ```
 
 ## b. Fit a k nearest neighbors model for each dataset for k=3, k=5, k=10, k=15, k=20, and k=25. Compute the accuracy of the resulting models for each value of k. Plot the results in a graph where the x-axis is the different values of k and the y-axis is the accuracy of the model.
@@ -41,20 +41,20 @@ knn_accuracy <- function(ds, k) {
 ```
 ```{r, echo = FALSE}
 "For binary dataset:"
-knn_accuracy(binary, 3)
-knn_accuracy(binary, 5)
-knn_accuracy(binary, 10)
-knn_accuracy(binary, 15)
-knn_accuracy(binary, 20)
-knn_accuracy(binary, 25)
+print(paste("K-val = 3,","Accuracy =", knn_accuracy(binary, 3), "%"))
+print(paste("K-val = 5,","Accuracy =", knn_accuracy(binary, 5), "%"))
+print(paste("K-val = 10,","Accuracy =", knn_accuracy(binary, 10), "%"))
+print(paste("K-val = 15,","Accuracy =", knn_accuracy(binary, 15), "%"))
+print(paste("K-val = 20,","Accuracy =", knn_accuracy(binary, 20), "%"))
+print(paste("K-val = 25,","Accuracy =", knn_accuracy(binary, 25), "%"))
 
 "For trinary dataset:"
-knn_accuracy(trinary, 3)
-knn_accuracy(trinary, 5)
-knn_accuracy(trinary, 10)
-knn_accuracy(trinary, 15)
-knn_accuracy(trinary, 20)
-knn_accuracy(trinary, 25)
+print(paste("K-val = 3,", "Accuracy =", knn_accuracy(trinary, 3), "%"))
+print(paste("K-val = 5,","Accuracy =", knn_accuracy(trinary, 5), "%"))
+print(paste("K-val = 10,","Accuracy =", knn_accuracy(trinary, 10), "%"))
+print(paste("K-val = 15,","Accuracy =", knn_accuracy(trinary, 15), "%"))
+print(paste("K-val = 20,","Accuracy =", knn_accuracy(trinary, 20), "%"))
+print(paste("K-val = 25,","Accuracy =", knn_accuracy(trinary, 25), "%"))
 ```
 ```{r, echo = FALSE}
 #Create dataframes for graphing
@@ -92,4 +92,4 @@ ggplot(data=combo_df, aes(x=k_vals, group=1)) +
 
 ## c. Looking back at the plots of the data, do you think a linear classifier would work well on these datasets?
 
-This data could possibly use a linear classifier to define a decision boundary because it does look like the two sets of data are separate from each other in their accuracy results.
+This data could possibly use a linear classifier to define a decision boundary because it does look like the two sets of data are mostly separate from each other in their accuracy results.
