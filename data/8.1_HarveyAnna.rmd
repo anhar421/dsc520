@@ -79,18 +79,17 @@ trinary_df <- data.frame(k_vals, trinary_acc)
 
 combo_df <- merge(binary_df, trinary_df)
 
-ggplot(data = combo_df) + geom_point(aes(x = k_vals, y = binary_acc)) + 
-    geom_point(aes(x = k_vals, y = trinary_acc)) + 
-    labs(title = "Accuracy vs K-values", y ="% Accuracy", x = "K-value") + scale_color_manual(name="Data", 
-                        labels = c("Binary", 
-                                   "Trinary"), 
-                        values = c("Binary"="blue", 
-                                   "Trinary"="red" 
-                                   ))
+ggplot(data=combo_df, aes(x=k_vals, group=1)) +
+  geom_point(aes(y = binary_acc, colour = "Binary")) +
+  geom_point(data=combo_df, aes(y = trinary_acc,colour="Trinary")) +
+  scale_colour_manual("",
+                      breaks = c("Binary", "Trinary"),
+                      values = c("red", "blue")) +
+  xlab("K-values") + ylab("% Accuracy") + ggtitle("K-values Vs Accuracy")
     
 ```
 
 
 ## c. Looking back at the plots of the data, do you think a linear classifier would work well on these datasets?
 
-I do not think that a linear classifier would work well with these datasets because the results are not linear.
+This data could possibly use a linear classifier to define a decision boundary because it does look like the two sets of data are separate from each other in their accuracy results.
