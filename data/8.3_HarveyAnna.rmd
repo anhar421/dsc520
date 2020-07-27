@@ -2,7 +2,7 @@
 title: "8.3 Assignment"
 author: "Anna Harvey"
 date: "7/26/2020"
-output: html_document
+output: word_document
 ---
 
 ```{r setup, include=FALSE}
@@ -36,6 +36,5 @@ fviz_cluster(k_clusters, data = unlabeled)
 ## c. As k-means is an unsupervised algorithm, you cannot compute the accuracy as there are no correct values to compare the output to. Instead, you will use the average distance from the center of each cluster as a measure of how well the model fits the data. To calculate this metric, simply compute the distance of each data point to the center of the cluster it is assigned to and take the average value of all of those distances.
 
 ```{r, echo = FALSE}
-distance <- get_dist(unlabeled)
-fviz_dist(distance, gradient = list(low = "#00AFBB", mid = "white", high = "#FC4E07"))
+fviz_nbclust(unlabeled, kmeans, method = "wss")
 ```
