@@ -1,6 +1,8 @@
 setwd("/users/Anna/Documents/GitHub/dsc520")
 #For dataframe creation and manipulation
 library(dplyr)
+#For plots
+library(ggplot2)
 
 #Import 2018 Florida data as dataframe
 fl_2018 <- read.csv("FL_ACSDP1Y2018.DP03_data_with_overlays_2020-07-29T125612.csv")
@@ -102,9 +104,7 @@ colnames(fl_hh_5yr) <- c("Total_households","MarginofError_TH", "Avg_household_s
                            "MarginofError_AvgHHsz")
 
 fl_hh_5yr <- fl_hh_5yr[-c(1, 3, 5, 7, 9), ]
-fl_hh_5yr$year <- c("2014", "2015", "2016", "2017", "2018")
-fl_hh_5yr <- fl_hh_5yr[,c("year", "Total_households","MarginofError_TH", "Avg_household_size",
-                          "MarginofError_AvgHHsz")]
+
 
 #New York
 nyhh_2018 <- read.csv("Household data/NY_ACSST1Y2018.S1101_data_with_overlays_2020-07-29T151028.csv")
@@ -241,4 +241,16 @@ ny_occ_5yr <- ny_occ_5yr[,c("year", "DP03_0026E", "DP03_0026M", "DP03_0027E", "D
                             "DP03_0040M", "DP03_0041E", "DP03_0041M", "DP03_0042E", "DP03_0042M", 
                             "DP03_0043E", "DP03_0043M", "DP03_0044E", "DP03_0044M", "DP03_0045E", 
                             "DP03_0045M")]
+
+median_income_5yr <- cbind(ny_econ_5yr$year, ny_econ_5yr$Median_household_income, 
+                           fl_econ_5yr$Median_household_income)
+
+
+ggplot() +
+    geom_line(data = median_income_5yr, aes(x = year, y = Median_household_income, group = 1),
+              color = "blue") +
+    geom_line(data = fl_econ_5yr, aes(x = year, y = Median_household_income, group = 1),
+              color = "red") +
+    xlab('Year') +
+    ylab('Median Household Income (dollars)')
 
