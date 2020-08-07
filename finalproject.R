@@ -3,6 +3,7 @@ setwd("/users/Anna/Documents/GitHub/dsc520")
 library(dplyr)
 #For plots
 library(ggplot2)
+library(lattice)
 
 #Import 2018 Florida data as dataframe
 fl_2018 <- read.csv("FL_ACSDP1Y2018.DP03_data_with_overlays_2020-07-29T125612.csv")
@@ -194,139 +195,66 @@ rownames(wa_hh_5yr) <- c("2014", "2015", "2016", "2017", "2018")
 
 #OCCUPATION INFORMATION
 #Florida
-fl_occ_2018 <- select(fl_2018, DP03_0026E, DP03_0026M, DP03_0027E, DP03_0027M, DP03_0028E, DP03_0028M,
-                      DP03_0029E, DP03_0029M, DP03_0030E, DP03_0030M, DP03_0031E, DP03_0031M, 
-                      DP03_0032E, DP03_0032M, DP03_0033E, DP03_0033M, DP03_0034E, DP03_0034M,
-                      DP03_0035E, DP03_0035M, DP03_0036E, DP03_0036M, DP03_0037E, DP03_0037M,
-                      DP03_0038E, DP03_0038M, DP03_0039E, DP03_0039M, DP03_0040E, DP03_0040M,
-                      DP03_0041E, DP03_0041M, DP03_0042E, DP03_0042M, DP03_0043E, DP03_0043M,
-                      DP03_0044E, DP03_0044M, DP03_0045E, DP03_0045M)
+fl_occ_2018 <- select(fl_2018, DP03_0027E, DP03_0028E,
+                      DP03_0029E, DP03_0030E, DP03_0031E)
 
-fl_occ_2017 <- select(fl_2017, DP03_0026E, DP03_0026M, DP03_0027E, DP03_0027M, DP03_0028E, DP03_0028M,
-                      DP03_0029E, DP03_0029M, DP03_0030E, DP03_0030M, DP03_0031E, DP03_0031M, 
-                      DP03_0032E, DP03_0032M, DP03_0033E, DP03_0033M, DP03_0034E, DP03_0034M,
-                      DP03_0035E, DP03_0035M, DP03_0036E, DP03_0036M, DP03_0037E, DP03_0037M,
-                      DP03_0038E, DP03_0038M, DP03_0039E, DP03_0039M, DP03_0040E, DP03_0040M,
-                      DP03_0041E, DP03_0041M, DP03_0042E, DP03_0042M, DP03_0043E, DP03_0043M,
-                      DP03_0044E, DP03_0044M, DP03_0045E, DP03_0045M)
+fl_occ_2017 <- select(fl_2017, DP03_0027E, DP03_0028E,
+                      DP03_0029E, DP03_0030E, DP03_0031E)
 
-fl_occ_2016 <- select(fl_2016, DP03_0026E, DP03_0026M, DP03_0027E, DP03_0027M, DP03_0028E, DP03_0028M,
-                      DP03_0029E, DP03_0029M, DP03_0030E, DP03_0030M, DP03_0031E, DP03_0031M, 
-                      DP03_0032E, DP03_0032M, DP03_0033E, DP03_0033M, DP03_0034E, DP03_0034M,
-                      DP03_0035E, DP03_0035M, DP03_0036E, DP03_0036M, DP03_0037E, DP03_0037M,
-                      DP03_0038E, DP03_0038M, DP03_0039E, DP03_0039M, DP03_0040E, DP03_0040M,
-                      DP03_0041E, DP03_0041M, DP03_0042E, DP03_0042M, DP03_0043E, DP03_0043M,
-                      DP03_0044E, DP03_0044M, DP03_0045E, DP03_0045M)
+fl_occ_2016 <- select(fl_2016, DP03_0027E, DP03_0028E,
+                      DP03_0029E, DP03_0030E, DP03_0031E)
 
-fl_occ_2015 <- select(fl_2015, DP03_0026E, DP03_0026M, DP03_0027E, DP03_0027M, DP03_0028E, DP03_0028M,
-                      DP03_0029E, DP03_0029M, DP03_0030E, DP03_0030M, DP03_0031E, DP03_0031M, 
-                      DP03_0032E, DP03_0032M, DP03_0033E, DP03_0033M, DP03_0034E, DP03_0034M,
-                      DP03_0035E, DP03_0035M, DP03_0036E, DP03_0036M, DP03_0037E, DP03_0037M,
-                      DP03_0038E, DP03_0038M, DP03_0039E, DP03_0039M, DP03_0040E, DP03_0040M,
-                      DP03_0041E, DP03_0041M, DP03_0042E, DP03_0042M, DP03_0043E, DP03_0043M,
-                      DP03_0044E, DP03_0044M, DP03_0045E, DP03_0045M)
+fl_occ_2015 <- select(fl_2015, DP03_0027E, DP03_0028E,
+                      DP03_0029E, DP03_0030E, DP03_0031E)
 
-fl_occ_2014 <- select(fl_2014, DP03_0026E, DP03_0026M, DP03_0027E, DP03_0027M, DP03_0028E, DP03_0028M,
-                      DP03_0029E, DP03_0029M, DP03_0030E, DP03_0030M, DP03_0031E, DP03_0031M, 
-                      DP03_0032E, DP03_0032M, DP03_0033E, DP03_0033M, DP03_0034E, DP03_0034M,
-                      DP03_0035E, DP03_0035M, DP03_0036E, DP03_0036M, DP03_0037E, DP03_0037M,
-                      DP03_0038E, DP03_0038M, DP03_0039E, DP03_0039M, DP03_0040E, DP03_0040M,
-                      DP03_0041E, DP03_0041M, DP03_0042E, DP03_0042M, DP03_0043E, DP03_0043M,
-                      DP03_0044E, DP03_0044M, DP03_0045E, DP03_0045M)
+fl_occ_2014 <- select(fl_2014, DP03_0027E, DP03_0028E,
+                      DP03_0029E, DP03_0030E, DP03_0031E)
 
 fl_occ_5yr <- rbind(fl_occ_2014, fl_occ_2015, fl_occ_2016, fl_occ_2017, fl_occ_2018)
 fl_occ_5yr <- fl_occ_5yr[-c(1, 3, 5, 7, 9), ]
 rownames(fl_occ_5yr) <- c("2014", "2015", "2016", "2017", "2018")
 
 #New York
-ny_occ_2018 <- select(ny_2018, DP03_0026E, DP03_0026M, DP03_0027E, DP03_0027M, DP03_0028E, DP03_0028M,
-                      DP03_0029E, DP03_0029M, DP03_0030E, DP03_0030M, DP03_0031E, DP03_0031M, 
-                      DP03_0032E, DP03_0032M, DP03_0033E, DP03_0033M, DP03_0034E, DP03_0034M,
-                      DP03_0035E, DP03_0035M, DP03_0036E, DP03_0036M, DP03_0037E, DP03_0037M,
-                      DP03_0038E, DP03_0038M, DP03_0039E, DP03_0039M, DP03_0040E, DP03_0040M,
-                      DP03_0041E, DP03_0041M, DP03_0042E, DP03_0042M, DP03_0043E, DP03_0043M,
-                      DP03_0044E, DP03_0044M, DP03_0045E, DP03_0045M)
+ny_occ_2018 <- select(ny_2018, DP03_0027E, DP03_0028E,
+                      DP03_0029E, DP03_0030E, DP03_0031E)
 
-ny_occ_2017 <- select(ny_2017, DP03_0026E, DP03_0026M, DP03_0027E, DP03_0027M, DP03_0028E, DP03_0028M,
-                      DP03_0029E, DP03_0029M, DP03_0030E, DP03_0030M, DP03_0031E, DP03_0031M, 
-                      DP03_0032E, DP03_0032M, DP03_0033E, DP03_0033M, DP03_0034E, DP03_0034M,
-                      DP03_0035E, DP03_0035M, DP03_0036E, DP03_0036M, DP03_0037E, DP03_0037M,
-                      DP03_0038E, DP03_0038M, DP03_0039E, DP03_0039M, DP03_0040E, DP03_0040M,
-                      DP03_0041E, DP03_0041M, DP03_0042E, DP03_0042M, DP03_0043E, DP03_0043M,
-                      DP03_0044E, DP03_0044M, DP03_0045E, DP03_0045M)
+ny_occ_2017 <- select(ny_2017, DP03_0027E, DP03_0028E,
+                      DP03_0029E, DP03_0030E, DP03_0031E)
 
-ny_occ_2016 <- select(ny_2016, DP03_0026E, DP03_0026M, DP03_0027E, DP03_0027M, DP03_0028E, DP03_0028M,
-                      DP03_0029E, DP03_0029M, DP03_0030E, DP03_0030M, DP03_0031E, DP03_0031M, 
-                      DP03_0032E, DP03_0032M, DP03_0033E, DP03_0033M, DP03_0034E, DP03_0034M,
-                      DP03_0035E, DP03_0035M, DP03_0036E, DP03_0036M, DP03_0037E, DP03_0037M,
-                      DP03_0038E, DP03_0038M, DP03_0039E, DP03_0039M, DP03_0040E, DP03_0040M,
-                      DP03_0041E, DP03_0041M, DP03_0042E, DP03_0042M, DP03_0043E, DP03_0043M,
-                      DP03_0044E, DP03_0044M, DP03_0045E, DP03_0045M)
+ny_occ_2016 <- select(ny_2016, DP03_0027E, DP03_0028E,
+                      DP03_0029E, DP03_0030E, DP03_0031E)
 
-ny_occ_2015 <- select(ny_2015, DP03_0026E, DP03_0026M, DP03_0027E, DP03_0027M, DP03_0028E, DP03_0028M,
-                      DP03_0029E, DP03_0029M, DP03_0030E, DP03_0030M, DP03_0031E, DP03_0031M, 
-                      DP03_0032E, DP03_0032M, DP03_0033E, DP03_0033M, DP03_0034E, DP03_0034M,
-                      DP03_0035E, DP03_0035M, DP03_0036E, DP03_0036M, DP03_0037E, DP03_0037M,
-                      DP03_0038E, DP03_0038M, DP03_0039E, DP03_0039M, DP03_0040E, DP03_0040M,
-                      DP03_0041E, DP03_0041M, DP03_0042E, DP03_0042M, DP03_0043E, DP03_0043M,
-                      DP03_0044E, DP03_0044M, DP03_0045E, DP03_0045M)
+ny_occ_2015 <- select(ny_2015, DP03_0027E, DP03_0028E,
+                      DP03_0029E, DP03_0030E, DP03_0031E)
 
-ny_occ_2014 <- select(ny_2014, DP03_0026E, DP03_0026M, DP03_0027E, DP03_0027M, DP03_0028E, DP03_0028M,
-                      DP03_0029E, DP03_0029M, DP03_0030E, DP03_0030M, DP03_0031E, DP03_0031M, 
-                      DP03_0032E, DP03_0032M, DP03_0033E, DP03_0033M, DP03_0034E, DP03_0034M,
-                      DP03_0035E, DP03_0035M, DP03_0036E, DP03_0036M, DP03_0037E, DP03_0037M,
-                      DP03_0038E, DP03_0038M, DP03_0039E, DP03_0039M, DP03_0040E, DP03_0040M,
-                      DP03_0041E, DP03_0041M, DP03_0042E, DP03_0042M, DP03_0043E, DP03_0043M,
-                      DP03_0044E, DP03_0044M, DP03_0045E, DP03_0045M)
+ny_occ_2014 <- select(ny_2014, DP03_0027E, DP03_0028E,
+                      DP03_0029E, DP03_0030E, DP03_0031E)
 
 ny_occ_5yr <- rbind(ny_occ_2014, ny_occ_2015, ny_occ_2016, ny_occ_2017, ny_occ_2018)
 ny_occ_5yr <- ny_occ_5yr[-c(1, 3, 5, 7, 9), ]
 rownames(ny_occ_5yr) <- c("2014", "2015", "2016", "2017", "2018")
 
 #Washington
-wa_occ_2018 <- select(wa_2018, DP03_0026E, DP03_0026M, DP03_0027E, DP03_0027M, DP03_0028E, DP03_0028M,
-                      DP03_0029E, DP03_0029M, DP03_0030E, DP03_0030M, DP03_0031E, DP03_0031M, 
-                      DP03_0032E, DP03_0032M, DP03_0033E, DP03_0033M, DP03_0034E, DP03_0034M,
-                      DP03_0035E, DP03_0035M, DP03_0036E, DP03_0036M, DP03_0037E, DP03_0037M,
-                      DP03_0038E, DP03_0038M, DP03_0039E, DP03_0039M, DP03_0040E, DP03_0040M,
-                      DP03_0041E, DP03_0041M, DP03_0042E, DP03_0042M, DP03_0043E, DP03_0043M,
-                      DP03_0044E, DP03_0044M, DP03_0045E, DP03_0045M)
+wa_occ_2018 <- select(wa_2018, DP03_0027E, DP03_0028E,
+                      DP03_0029E, DP03_0030E, DP03_0031E)
 
-wa_occ_2017 <- select(wa_2017, DP03_0026E, DP03_0026M, DP03_0027E, DP03_0027M, DP03_0028E, DP03_0028M,
-                      DP03_0029E, DP03_0029M, DP03_0030E, DP03_0030M, DP03_0031E, DP03_0031M, 
-                      DP03_0032E, DP03_0032M, DP03_0033E, DP03_0033M, DP03_0034E, DP03_0034M,
-                      DP03_0035E, DP03_0035M, DP03_0036E, DP03_0036M, DP03_0037E, DP03_0037M,
-                      DP03_0038E, DP03_0038M, DP03_0039E, DP03_0039M, DP03_0040E, DP03_0040M,
-                      DP03_0041E, DP03_0041M, DP03_0042E, DP03_0042M, DP03_0043E, DP03_0043M,
-                      DP03_0044E, DP03_0044M, DP03_0045E, DP03_0045M)
+wa_occ_2017 <- select(wa_2017, DP03_0027E, DP03_0028E,
+                      DP03_0029E, DP03_0030E, DP03_0031E)
 
-wa_occ_2016 <- select(wa_2016, DP03_0026E, DP03_0026M, DP03_0027E, DP03_0027M, DP03_0028E, DP03_0028M,
-                      DP03_0029E, DP03_0029M, DP03_0030E, DP03_0030M, DP03_0031E, DP03_0031M, 
-                      DP03_0032E, DP03_0032M, DP03_0033E, DP03_0033M, DP03_0034E, DP03_0034M,
-                      DP03_0035E, DP03_0035M, DP03_0036E, DP03_0036M, DP03_0037E, DP03_0037M,
-                      DP03_0038E, DP03_0038M, DP03_0039E, DP03_0039M, DP03_0040E, DP03_0040M,
-                      DP03_0041E, DP03_0041M, DP03_0042E, DP03_0042M, DP03_0043E, DP03_0043M,
-                      DP03_0044E, DP03_0044M, DP03_0045E, DP03_0045M)
+wa_occ_2016 <- select(wa_2016, DP03_0027E, DP03_0028E,
+                      DP03_0029E, DP03_0030E, DP03_0031E)
 
-wa_occ_2015 <- select(wa_2015, DP03_0026E, DP03_0026M, DP03_0027E, DP03_0027M, DP03_0028E, DP03_0028M,
-                      DP03_0029E, DP03_0029M, DP03_0030E, DP03_0030M, DP03_0031E, DP03_0031M, 
-                      DP03_0032E, DP03_0032M, DP03_0033E, DP03_0033M, DP03_0034E, DP03_0034M,
-                      DP03_0035E, DP03_0035M, DP03_0036E, DP03_0036M, DP03_0037E, DP03_0037M,
-                      DP03_0038E, DP03_0038M, DP03_0039E, DP03_0039M, DP03_0040E, DP03_0040M,
-                      DP03_0041E, DP03_0041M, DP03_0042E, DP03_0042M, DP03_0043E, DP03_0043M,
-                      DP03_0044E, DP03_0044M, DP03_0045E, DP03_0045M)
+wa_occ_2015 <- select(wa_2015, DP03_0027E, DP03_0028E,
+                      DP03_0029E, DP03_0030E, DP03_0031E)
 
-wa_occ_2014 <- select(wa_2014, DP03_0026E, DP03_0026M, DP03_0027E, DP03_0027M, DP03_0028E, DP03_0028M,
-                      DP03_0029E, DP03_0029M, DP03_0030E, DP03_0030M, DP03_0031E, DP03_0031M, 
-                      DP03_0032E, DP03_0032M, DP03_0033E, DP03_0033M, DP03_0034E, DP03_0034M,
-                      DP03_0035E, DP03_0035M, DP03_0036E, DP03_0036M, DP03_0037E, DP03_0037M,
-                      DP03_0038E, DP03_0038M, DP03_0039E, DP03_0039M, DP03_0040E, DP03_0040M,
-                      DP03_0041E, DP03_0041M, DP03_0042E, DP03_0042M, DP03_0043E, DP03_0043M,
-                      DP03_0044E, DP03_0044M, DP03_0045E, DP03_0045M)
+wa_occ_2014 <- select(wa_2014, DP03_0027E, DP03_0028E,
+                      DP03_0029E, DP03_0030E, DP03_0031E)
 
 wa_occ_5yr <- rbind(wa_occ_2014, wa_occ_2015, wa_occ_2016, wa_occ_2017, wa_occ_2018)
 wa_occ_5yr <- wa_occ_5yr[-c(1, 3, 5, 7, 9), ]
-rownames(wa_occ_5yr) <- c("2014", "2015", "2016", "2017", "2018")
+wa_occ_5yr$year <- c("2014", "2015", "2016", "2017", "2018")
+                                "DP03_0044E", "DP03_0045E")
+
 
 #Put all relevant data into single dataframe for household and income variables
 summary_5yr <- as.data.frame(cbind(ny_econ_5yr$Median_household_income, 
@@ -343,17 +271,68 @@ colnames(summary_5yr) <- c("NY_Med_Inc", "FL_Med_Inc", "WA_Med_Inc", "NY_Mn_Inc"
                            "WA_Total_HH", "NY_HH_size","FL_HH_size", "WA_HH_size", "Year")
 rownames(summary_5yr) <- c("2014", "2015", "2016", "2017", "2018")
 
+#Put all relevant occupation information into dataframes by year
+summary_occ_2014 <- as.data.frame((rbind(ny_occ_2014, fl_occ_2014, wa_occ_2014)))
+summary_occ_2014 <- summary_occ_2014[-c(1, 3, 5), ]
+rownames(summary_occ_2014) <- c("NY", "FL", "WA")
+
+summary_occ_2015 <- as.data.frame((rbind(ny_occ_2015, fl_occ_2015, wa_occ_2015)))
+summary_occ_2015 <- summary_occ_2015[-c(1, 3, 5), ]
+rownames(summary_occ_2015) <- c("NY", "FL", "WA")
+
+summary_occ_2016 <- as.data.frame((rbind(ny_occ_2016, fl_occ_2016, wa_occ_2016)))
+summary_occ_2016 <- summary_occ_2016[-c(1, 3, 5), ]
+rownames(summary_occ_2016) <- c("NY", "FL", "WA")
+
+summary_occ_2017 <- as.data.frame((rbind(ny_occ_2017, fl_occ_2017, wa_occ_2017)))
+summary_occ_2017 <- summary_occ_2017[-c(1, 3, 5), ]
+rownames(summary_occ_2017) <- c("NY", "FL", "WA")
+
+summary_occ_2018 <- as.data.frame((rbind(ny_occ_2018, fl_occ_2018, wa_occ_2018)))
+summary_occ_2018 <- summary_occ_2018[-c(1, 3, 5), ]
+rownames(summary_occ_2018) <- c("NY", "FL", "WA")
+
+#Rotate dataframes
+summary_occ_2014 <- as.data.frame(t(summary_occ_2014))
+summary_occ_2015 <- as.data.frame(t(summary_occ_2015))
+summary_occ_2016 <- as.data.frame(t(summary_occ_2016))
+summary_occ_2017 <- as.data.frame(t(summary_occ_2017))
+summary_occ_2018 <- as.data.frame(t(summary_occ_2018))
+summary_occ_2018$occupation <- c("DP03_0027E", "DP03_0028E",
+                            "DP03_0029E", "DP03_0030E", "DP03_0031E")
 
 
+#Create line graphs for linear changes for median income, household total, and household size
 ggplot(summary_5yr) + 
     geom_line(aes(x = Year, y = NY_Med_Inc, group = 1, color ="blue")) +
     geom_line(aes(x = Year, y = FL_Med_Inc, group = 1, color = "red")) +
-    geom_line(aes(x = Year, y = WA_Med_Inc, group = 1, color = "green"))
+    geom_line(aes(x = Year, y = WA_Med_Inc, group = 1, color = "green")) +
+    labs(title = "Median Income Trends", x = "Year", y = "Median Income (USD)") +
+    scale_color_manual(values=c("blue", "red", "green"), name = "State",
+                       labels=c("New York", "Washington", "Florida"))
 
+ggplot(summary_5yr) + 
+    geom_line(aes(x = Year, y = NY_Total_HH, group = 1, color ="blue")) +
+    geom_line(aes(x = Year, y = FL_Total_HH, group = 1, color = "red")) +
+    geom_line(aes(x = Year, y = WA_Total_HH, group = 1, color = "green")) +
+    labs(title = "Number of Households", x = "Year", y = "Total # of Households") +
+    scale_color_manual(values=c("blue", "red", "green"), name = "State",
+                       labels=c("New York", "Washington", "Florida"))
 
-summary_occ_2014 <- as.data.frame((rbind(ny_occ_2014, fl_occ_2014, wa_occ_2014)))
-summary_occ_2014 <- summary_occ_2014[-c(1, 3, 5), ]
-summary_occ_2014$state <- c("NY", "FL", "WA")
-rownames(summary_occ_2014) <- c("NY", "FL", "WA")
+ggplot(summary_5yr) + 
+    geom_line(aes(x = Year, y = NY_HH_size, group = 1, color ="blue")) +
+    geom_line(aes(x = Year, y = FL_HH_size, group = 1, color = "red")) +
+    geom_line(aes(x = Year, y = WA_HH_size, group = 1, color = "green")) +
+    labs(title = "Average Household Size", x = "Year", y = "# of People in Household") +
+    scale_color_manual(values=c("blue", "red", "green"), name = "State",
+                       labels=c("New York", "Washington", "Florida"))
 
-
+#Create bar graphs for occupation trends for each year
+ggplot(summary_occ_2018, aes(x = occupation, y = NY, fill = "blue")) + 
+    geom_bar(stat="identity") + labs(title = "Occupation distribution - NY 2018",
+                                     x = "Occupation", y = "# of People") +
+    scale_fill_identity(name = "Occupation", labels = c("Management, business, science, and arts",
+                                                      "Service", "Sales and office",
+                                                      "Natural resources, construction, and maintenance",
+                                                      "Production, transportation, and material moving"))
+                 
