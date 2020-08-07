@@ -306,9 +306,6 @@ summary_occ$year <- c("2018", "2018", "2018", "2018", "2018", "2017", "2017", "2
                       "2014")
 summary_occ$occupation <- c("DP03_0027E", "DP03_0028E", "DP03_0029E", "DP03_0030E", "DP03_0031E")
 
-# summary_occ_2018$occupation <- c("DP03_0027E", "DP03_0028E",
-#                             "DP03_0029E", "DP03_0030E", "DP03_0031E")
-
 
 #Create line graphs for linear changes for median income, household total, and household size
 ggplot(summary_5yr) + 
@@ -355,6 +352,7 @@ ggplot(summary_occ, aes(x = year, y = WA, fill = occupation)) +
 ggplot(summary_occ, aes(x = year, y = FL, fill = occupation)) +
     geom_col(position = "dodge") + labs(title ="Occupation distribution - FL",
                                         x = "Year", y = "# of People") +
+    theme(legend.position = "bottom") +
     scale_fill_discrete(name="Occupation", labels = c("Management, business, science, and arts",
                                                       "Service", "Sales and office",
                                                       "Natural resources, construction, and maintenance",
