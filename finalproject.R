@@ -333,17 +333,19 @@ ggplot(summary_5yr) +
                        labels=c("New York", "Washington", "Florida"))
 
 #Create bar graphs for occupation trends for each state
-ggplot(summary_occ, aes(x = year, y = NY, fill = occupation)) +
-    geom_col(position = "dodge") + labs(title ="Occupation distribution - NY",
+ggplot(summary_occ, aes(x = year, y = WA, fill = occupation)) +
+    geom_col(position = "dodge") + labs(title ="Occupation distribution - WA",
                                         x = "Year", y = "# of People") +
+    theme(legend.position = "bottom", legend.key.size = unit(0.5,"line"), legend.direction = "vertical") +
     scale_fill_discrete(name="Occupation", labels = c("Management, business, science, and arts",
                                                       "Service", "Sales and office",
                                                       "Natural resources, construction, and maintenance",
                                                       "Production, transportation, and material moving"))
 
-ggplot(summary_occ, aes(x = year, y = WA, fill = occupation)) +
-    geom_col(position = "dodge") + labs(title ="Occupation distribution - WA",
+ggplot(summary_occ, aes(x = year, y = NY, fill = occupation)) +
+    geom_col(position = "dodge") + labs(title ="Occupation distribution - NY",
                                         x = "Year", y = "# of People") +
+    theme(legend.position = "bottom", legend.key.size = unit(0.5,"line"), legend.direction = "vertical") +
     scale_fill_discrete(name="Occupation", labels = c("Management, business, science, and arts",
                                                       "Service", "Sales and office",
                                                       "Natural resources, construction, and maintenance",
