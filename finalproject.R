@@ -253,7 +253,7 @@ wa_occ_2014 <- select(wa_2014, DP03_0027E, DP03_0028E,
 wa_occ_5yr <- rbind(wa_occ_2014, wa_occ_2015, wa_occ_2016, wa_occ_2017, wa_occ_2018)
 wa_occ_5yr <- wa_occ_5yr[-c(1, 3, 5, 7, 9), ]
 wa_occ_5yr$year <- c("2014", "2015", "2016", "2017", "2018")
-                                "DP03_0044E", "DP03_0045E")
+                              
 
 
 #Put all relevant data into single dataframe for household and income variables
@@ -298,8 +298,16 @@ summary_occ_2015 <- as.data.frame(t(summary_occ_2015))
 summary_occ_2016 <- as.data.frame(t(summary_occ_2016))
 summary_occ_2017 <- as.data.frame(t(summary_occ_2017))
 summary_occ_2018 <- as.data.frame(t(summary_occ_2018))
-summary_occ_2018$occupation <- c("DP03_0027E", "DP03_0028E",
-                            "DP03_0029E", "DP03_0030E", "DP03_0031E")
+summary_occ <- as.data.frame((rbind(summary_occ_2018, summary_occ_2017, summary_occ_2016,
+                                    summary_occ_2015, summary_occ_2014)))
+summary_occ$year <- c("2018", "2018", "2018", "2018", "2018", "2017", "2017", "2017",
+                      "2017", "2017", "2016", "2016", "2016", "2016", "2016", "2015",
+                      "2015", "2015", "2015", "2015", "2014", "2014", "2014", "2014",
+                      "2014")
+summary_occ$occupation <- c("DP03_0027E", "DP03_0028E", "DP03_0029E", "DP03_0030E", "DP03_0031E")
+
+# summary_occ_2018$occupation <- c("DP03_0027E", "DP03_0028E",
+#                             "DP03_0029E", "DP03_0030E", "DP03_0031E")
 
 
 #Create line graphs for linear changes for median income, household total, and household size
@@ -327,19 +335,27 @@ ggplot(summary_5yr) +
     scale_color_manual(values=c("blue", "red", "green"), name = "State",
                        labels=c("New York", "Washington", "Florida"))
 
-#Create bar graphs for occupation trends for each year
+#Create bar graphs for occupation trends for each state
 ggplot(summary_occ, aes(x = year, y = NY, fill = occupation)) +
-    geom_col(position = "dodge")
+    geom_col(position = "dodge") + labs(title ="Occupation distribution - NY",
+                                        x = "Year", y = "# of People") +
+    scale_fill_discrete(name="Occupation", labels = c("Management, business, science, and arts",
+                                                      "Service", "Sales and office",
+                                                      "Natural resources, construction, and maintenance",
+                                                      "Production, transportation, and material moving"))
 
-# ggplot(summary_occ_2018) +
-#     geom_col(aes(x = occupation, y = NY, fill = "blue"), position="dodge") +
-#     geom_col(aes(x = occupation, y = WA, fill = "green"), position="dodge") +
-#     geom_col(aes(x = occupation, y = FL, fill = "red"), position ="dodge") +
-#     labs(title = "Occupation distribution - 2018", x = "Occupation", y = "# of People") +
-#     scale_fill_identity()
-        
-        # "Management, business, science, and arts",
-        #                                               "Service", "Sales and office",
-        #                                               "Natural resources, construction, and maintenance",
-        #                                               "Production, transportation, and material moving"))
-                 
+ggplot(summary_occ, aes(x = year, y = WA, fill = occupation)) +
+    geom_col(position = "dodge") + labs(title ="Occupation distribution - WA",
+                                        x = "Year", y = "# of People") +
+    scale_fill_discrete(name="Occupation", labels = c("Management, business, science, and arts",
+                                                      "Service", "Sales and office",
+                                                      "Natural resources, construction, and maintenance",
+                                                      "Production, transportation, and material moving"))
+
+ggplot(summary_occ, aes(x = year, y = FL, fill = occupation)) +
+    geom_col(position = "dodge") + labs(title ="Occupation distribution - FL",
+                                        x = "Year", y = "# of People") +
+    scale_fill_discrete(name="Occupation", labels = c("Management, business, science, and arts",
+                                                      "Service", "Sales and office",
+                                                      "Natural resources, construction, and maintenance",
+                                                      "Production, transportation, and material moving"))
