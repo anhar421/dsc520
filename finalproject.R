@@ -3,7 +3,7 @@ setwd("/users/Anna/Documents/GitHub/dsc520")
 library(dplyr)
 #For plots
 library(ggplot2)
-library(lattice)
+library(tidyverse)
 
 #Import 2018 Florida data as dataframe
 fl_2018 <- read.csv("FL_ACSDP1Y2018.DP03_data_with_overlays_2020-07-29T125612.csv")
@@ -328,11 +328,18 @@ ggplot(summary_5yr) +
                        labels=c("New York", "Washington", "Florida"))
 
 #Create bar graphs for occupation trends for each year
-ggplot(summary_occ_2018, aes(x = occupation, y = NY, fill = "blue")) + 
-    geom_bar(stat="identity") + labs(title = "Occupation distribution - NY 2018",
-                                     x = "Occupation", y = "# of People") +
-    scale_fill_identity(name = "Occupation", labels = c("Management, business, science, and arts",
-                                                      "Service", "Sales and office",
-                                                      "Natural resources, construction, and maintenance",
-                                                      "Production, transportation, and material moving"))
+ggplot(summary_occ, aes(x = year, y = NY, fill = occupation)) +
+    geom_col(position = "dodge")
+
+# ggplot(summary_occ_2018) +
+#     geom_col(aes(x = occupation, y = NY, fill = "blue"), position="dodge") +
+#     geom_col(aes(x = occupation, y = WA, fill = "green"), position="dodge") +
+#     geom_col(aes(x = occupation, y = FL, fill = "red"), position ="dodge") +
+#     labs(title = "Occupation distribution - 2018", x = "Occupation", y = "# of People") +
+#     scale_fill_identity()
+        
+        # "Management, business, science, and arts",
+        #                                               "Service", "Sales and office",
+        #                                               "Natural resources, construction, and maintenance",
+        #                                               "Production, transportation, and material moving"))
                  
